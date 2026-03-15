@@ -29,11 +29,13 @@ export async function shareMeal(prevState, formData) {
     meal.image.size === 0
   ) {
     return {
-      message: "Invalid input."
-    }
+      message: "Invalid input.",
+    };
   }
 
   await saveMeal(meal);
-  revalidatePath("/meals");
+  revalidatePath("/meals"); 
+  // above function basically does the job of revalidating the cache that belongs to a certain route path
+  // Note :- nested paths will not be validated for above, to re-validate nested path use -> revalidatePath("/meals", "layout")
   redirect("/meals");
 }
