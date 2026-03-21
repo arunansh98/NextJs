@@ -23,15 +23,23 @@ export default async function FilteredNewsPage({ params }) {
     links = getAvailableNewsMonths(selectedYear);
   }
 
-  if(selectedYear && selectedMonth){
+  if (selectedYear && selectedMonth) {
     news = getNewsForYearAndMonth(selectedYear, selectedMonth);
-    links = []; 
+    links = [];
   }
 
   let newsContent = <p>No news found for selected period</p>;
 
   if (news && news.length > 0) {
     newsContent = <NewsList news={news} />;
+  }
+
+  if (
+    (selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+    (selectedMonth &&
+      !getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+  ) {
+    throw new Error("Invalid filter.");
   }
 
   return (
