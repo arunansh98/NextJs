@@ -4,8 +4,9 @@ import sql from "better-sqlite3";
 
 const db = sql("data.db");
 
-export function getAllNews() {
+export async function getAllNews() {
   const news = db.prepare("SELECT * FROM news").all(); // this gives a synchronous api, so we don't need to resolve any promise
+  await new Promise(resolve => setTimeout(resolve, 2000));
   return news;
 }
 
