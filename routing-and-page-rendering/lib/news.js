@@ -1,7 +1,12 @@
 import { DUMMY_NEWS } from '@/dummy-news';
 
+import sql from "better-sqlite3";
+
+const db = sql("data.db");
+
 export function getAllNews() {
-  return DUMMY_NEWS;
+  const news = db.prepare("SELECT * FROM news").all(); // this gives a synchronous api, so we don't need to resolve any promise
+  return news;
 }
 
 export function getLatestNews() {
